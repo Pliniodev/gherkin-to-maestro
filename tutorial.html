@@ -67,11 +67,69 @@
 
   <hr>
 
+  <h2>5. Esperar um elemento aparecer ou sumir</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When espera o elemento "loading" aparecer
+When espera o elemento "popup" sumir</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai esperar até que o elemento "loading" apareça ou até que o "popup" desapareça.</p>
+
+  <hr>
+
+  <h2>6. Esperar por um tempo fixo</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When espera</pre>
+  <p>Ou:</p>
+  <pre>When espera 10 segundos</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai simplesmente esperar 5 segundos por padrão ou o tempo que você especificar.</p>
+
+  <hr>
+
+  <h2>7. Rolar a tela</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When rola a tela para baixo
+When rola a tela para cima</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai rolar a tela para baixo ou para cima, simulando um gesto do usuário.</p>
+
+  <hr>
+
+  <h2>8. Pressionar o botão voltar</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When pressiona o botão voltar</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai simular o pressionamento do botão "Voltar" do aparelho.</p>
+
+  <hr>
+
+  <h2>9. Deslizar (swipe) em um elemento</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When desliza para a direita no elemento "Banner"
+When desliza para a esquerda no elemento "Imagem"
+When desliza para cima no elemento "Lista"
+When desliza para baixo no elemento "Feed"</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai deslizar o elemento na direção indicada.</p>
+
+  <hr>
+
   <h2>Dicas importantes:</h2>
   <ul>
     <li>Sempre coloque o nome da tela ou botão entre <strong>aspas</strong>.</li>
     <li>Siga a estrutura: <code>Given</code>, <code>When</code>, <code>Then</code>.</li>
     <li>Não se preocupe com maiúsculas ou acentos, o site entende bem.</li>
+    <li>Para esperar, pode escrever só <code>When espera</code> para 5 segundos ou especificar: <code>When espera 10 segundos</code>.</li>
   </ul>
 
   <p><a href="index.html">← Voltar para o conversor</a></p>

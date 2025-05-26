@@ -1,103 +1,112 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Gherkin → Maestro YAML</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feature to Maestro YAML</title>
   <style>
     body {
-      font-family: sans-serif;
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #0055aa;
     }
     textarea {
       width: 100%;
       height: 200px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 0.5rem;
       margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
     }
     button {
-      padding: 0.5rem 1rem;
-      margin-right: 0.5rem;
+      background-color: #0055aa;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+    button:hover {
+      background-color: #003f7f;
     }
     pre {
-      background: #f4f4f4;
+      background: #222;
+      color: #eee;
       padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
       white-space: pre-wrap;
-      word-break: break-word;
+      word-wrap: break-word;
+      max-height: 350px;
     }
-    a {
-      display: inline-block;
-      margin-top: 1rem;
+    .vocab-section {
+      background: white;
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 6px #ccc;
+      max-width: 700px;
+      margin-top: 2rem;
+    }
+    .vocab-section h2 {
+      color: #0055aa;
+    }
+    .vocab-section ul {
+      list-style: disc inside;
+      margin-left: 1rem;
     }
   </style>
 </head>
 <body>
+  <h1>Conversor de Gherkin (.feature) para Maestro YAML</h1>
+  <p>Cole a sua história de teste no formato Gherkin (usado em .feature) e clique em "Gerar YAML".</p>
+  <textarea id="gherkin-input" placeholder="Exemplo:
+Given que estou na tela 'Login'
+When preenche o campo 'email' com 'teste@example.com'
+When preenche o campo 'senha' com '123456'
+When clica no botão 'Entrar'
+When espera 10 segundos
+Then vejo a tela 'Home'
+"></textarea>
+  <button id="btnGenerate">Gerar YAML</button>
+  <pre id="yaml-output"></pre>
 
-  <h1>Gherkin → Maestro YAML</h1>
+   <a href="tutorial.html" target="_blank">📖 Ver tutorial de como escrever</a>
 
-  <label for="gherkinInput">Cole seu Gherkin (.feature):</label>
-  <textarea id="gherkinInput"></textarea>
+  <section class="vocab-section">
+    <h2>Guia rápido para escrever os testes (para Product Owners)</h2>
+    <p>Este site entende comandos simples em português que representam ações na aplicação. Use frases como estas:</p>
+    <ul>
+      <li><b>Given</b> — Estado inicial, por exemplo: <i>Given que estou na tela "Login"</i></li>
+      <li><b>When</b> — Ações do usuário, como:
+        <ul>
+          <li>Preencher campo: <i>When preenche o campo "email" com "meuemail@example.com"</i></li>
+          <li>Clicar botão: <i>When clica no botão "Entrar"</i></li>
+          <li>Esperar por um elemento: <i>When espera o "loading"</i> ou <i>When espera o elemento "popup" sumir</i></li>
+          <li>Esperar um tempo fixo: <i>When espera</i> (5 segundos padrão) ou <i>When espera 10 segundos</i></li>
+          <li>Outros: rolar a tela, deslizar, pressionar voltar</li>
+        </ul>
+      </li>
+      <li><b>Then</b> — Resultado esperado, como: <i>Then vejo a tela "Home"</i></li>
+    </ul>
+    <p>Escreva entre aspas ("") o nome dos elementos, telas ou textos que aparecem na tela.</p>
+    <p>Exemplo mínimo completo:</p>
+    <pre>Given que estou na tela "Login"
+When preenche o campo "email" com "teste@example.com"
+When preenche o campo "senha" com "123456"
+When clica no botão "Entrar"
+When espera 10 segundos
+Then vejo a tela "Home"</pre>
+  </section>
 
-  <button onclick="convert()">Gerar YAML</button>
-  <button onclick="copyYaml()">Copiar YAML</button>
-
-  <h2>YAML Gerado:</h2>
-  <pre id="yamlOutput"></pre>
-
-  <a href="tutorial.html" target="_blank">📖 Ver tutorial de como escrever</a>
-
-  <script>
-    function gherkinToMaestroYaml(gherkinText) {
-      const lines = gherkinText.split('\n').map(line => line.trim());
-      const steps = [];
-
-      steps.push('appId: com.example.app');
-      steps.push('---');
-
-      lines.forEach(line => {
-        if (line.startsWith('Given')) {
-          const tela = line.match(/"([^"]+)"/);
-          if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
-          else steps.push(`- launchApp`);
-        }
-
-        if (line.startsWith('When') || line.startsWith('And')) {
-          const preenche = line.match(/preenche o campo "([^"]+)" com "([^"]+)"/);
-          if (preenche) {
-            steps.push(`- tapOn: "${preenche[1]}"`);
-            steps.push(`- inputText: "${preenche[2]}"`);
-            return;
-          }
-
-          const clica = line.match(/clica no botão "([^"]+)"/);
-          if (clica) {
-            steps.push(`- tapOn: "${clica[1]}"`);
-            return;
-          }
-        }
-
-        if (line.startsWith('Then')) {
-          const tela = line.match(/"([^"]+)"/);
-          if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
-        }
-      });
-
-      return steps.join('\n');
-    }
-
-    function convert() {
-      const gherkinText = document.getElementById('gherkinInput').value;
-      const yaml = gherkinToMaestroYaml(gherkinText);
-      document.getElementById('yamlOutput').textContent = yaml;
-    }
-
-    function copyYaml() {
-      const yaml = document.getElementById('yamlOutput').textContent;
-      navigator.clipboard.writeText(yaml).then(() => {
-        alert('YAML copiado!');
-      });
-    }
-  </script>
-
+  <script src="script.js" defer></script>
 </body>
 </html>
