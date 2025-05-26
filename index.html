@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gherkin → Maestro YAML</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gherkin → Maestro YAML</h1>
+
+  <label for="gherkinInput">Cole seu Gherkin (.feature):</label>
+  <textarea id="gherkinInput"></textarea>
+
+  <button onclick="convert()">Gerar YAML</button>
+  <button onclick="copyYaml()">Copiar YAML</button>
+
+  <h2>YAML Gerado:</h2>
+  <pre id="yamlOutput"></pre>
+
+  <script>
+    function gherkinToMaestroYaml(gherkinText) {
+      const lines = gherkinText.split('\n').map(line => line.trim());
+      const steps = [];
+
+      steps.push('appId: com.example.app');
+      steps.push('---');
+
+      lines.forEach(line => {
+        if (line.startsWith('Given')) {
+          const action = line.replace('Given ', '').trim();
+          if (action.includes('tela')) {
+            const tela = action.match(/"([^"]+)"/);
+            if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
+            else steps.push(`- launchApp`);
+          }
+        }
+        if (line.startsWith('When') || line.startsWith('And')) {
+          const action = line.replace(/^(When|And) /, '').trim();
+          if (action.startsWith('o usuário preenche')) {
+            const campo = action.match(/"([^"]+)"/);
+            const valor = action.match(/com "([^"]+)"/);
+            if (campo) steps.push(`- tapOn: "${campo[1]}"`);
+            if (valor) steps.push(`- inputText: "${valor[1]}"`);
+          } else if (action.startsWith('clica no botão')) {
+            const botao = action.match(/"([^"]+)"/);
+            if (botao) steps.push(`- tapOn: "${botao[1]}"`);
+          }
+        }
+        if (line.startsWith('Then')) {
+          const action = line.replace('Then ', '').trim();
+          const tela = action.match(/"([^"]+)"/);
+          if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
+        }
+      });
+
+      return steps.join('\n');
+    }
+
+    function convert() {
+      const gherkinText = document.getElementById('gherkinInput').value;
+      const yaml = gherkinToMaestroYaml(gherkinText);
+      document.getElementById('yamlOutput').textContent = yaml;
+    }
+
+    function copyYaml() {
+      const yaml = document.getElementById('yamlOutput').textContent;
+      navigator.clipboard.writeText(yaml).then(() => {
+        alert('YAML copiado!');
+      });
+    }
+  </script>
+
+</body>
+</html>
