@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial: Como escrever testes</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+    }
+    hr {
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tutorial: Como escrever testes</h1>
+
+  <p>Este site transforma descrições simples de testes no formato "história" para um arquivo que o time técnico pode usar para automatizar os testes.</p>
+
+  <p>Siga os exemplos abaixo. Não precisa saber programar! Basta copiar a estrutura e trocar pelos nomes das telas e botões do seu aplicativo.</p>
+
+  <h2>1. Verificar que uma tela está aparecendo</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>Given o app está na tela "Login"</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O app deve mostrar a tela chamada "Login".</p>
+
+  <hr>
+
+  <h2>2. Preencher um campo com um valor</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When o usuário preenche o campo "Usuário" com "teste123"</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai clicar no campo chamado "Usuário" e digitar "teste123".</p>
+
+  <hr>
+
+  <h2>3. Clicar em um botão</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>When clica no botão "Entrar"</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai simular um clique no botão "Entrar".</p>
+
+  <hr>
+
+  <h2>4. Confirmar que uma tela foi exibida</h2>
+
+  <p><strong>Você escreve:</strong></p>
+  <pre>Then vê a tela "Dashboard"</pre>
+
+  <p><strong>O que significa:</strong></p>
+  <p>O teste vai verificar se a tela "Dashboard" está aparecendo.</p>
+
+  <hr>
+
+  <h2>Dicas importantes:</h2>
+  <ul>
+    <li>Sempre coloque o nome da tela ou botão entre <strong>aspas</strong>.</li>
+    <li>Siga a estrutura: <code>Given</code>, <code>When</code>, <code>Then</code>.</li>
+    <li>Não se preocupe com maiúsculas ou acentos, o site entende bem.</li>
+  </ul>
+
+  <p><a href="index.html">← Voltar para o conversor</a></p>
+
+</body>
+</html>

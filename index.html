@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <title>Gherkin → Maestro YAML</title>
@@ -25,6 +25,10 @@
       white-space: pre-wrap;
       word-break: break-word;
     }
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -40,6 +44,8 @@
   <h2>YAML Gerado:</h2>
   <pre id="yamlOutput"></pre>
 
+  <a href="tutorial.html" target="_blank">📖 Ver tutorial de como escrever</a>
+
   <script>
     function gherkinToMaestroYaml(gherkinText) {
       const lines = gherkinText.split('\n').map(line => line.trim());
@@ -50,28 +56,28 @@
 
       lines.forEach(line => {
         if (line.startsWith('Given')) {
-          const action = line.replace('Given ', '').trim();
-          if (action.includes('tela')) {
-            const tela = action.match(/"([^"]+)"/);
-            if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
-            else steps.push(`- launchApp`);
-          }
+          const tela = line.match(/"([^"]+)"/);
+          if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
+          else steps.push(`- launchApp`);
         }
+
         if (line.startsWith('When') || line.startsWith('And')) {
-          const action = line.replace(/^(When|And) /, '').trim();
-          if (action.startsWith('o usuário preenche')) {
-            const campo = action.match(/"([^"]+)"/);
-            const valor = action.match(/com "([^"]+)"/);
-            if (campo) steps.push(`- tapOn: "${campo[1]}"`);
-            if (valor) steps.push(`- inputText: "${valor[1]}"`);
-          } else if (action.startsWith('clica no botão')) {
-            const botao = action.match(/"([^"]+)"/);
-            if (botao) steps.push(`- tapOn: "${botao[1]}"`);
+          const preenche = line.match(/preenche o campo "([^"]+)" com "([^"]+)"/);
+          if (preenche) {
+            steps.push(`- tapOn: "${preenche[1]}"`);
+            steps.push(`- inputText: "${preenche[2]}"`);
+            return;
+          }
+
+          const clica = line.match(/clica no botão "([^"]+)"/);
+          if (clica) {
+            steps.push(`- tapOn: "${clica[1]}"`);
+            return;
           }
         }
+
         if (line.startsWith('Then')) {
-          const action = line.replace('Then ', '').trim();
-          const tela = action.match(/"([^"]+)"/);
+          const tela = line.match(/"([^"]+)"/);
           if (tela) steps.push(`- assertVisible: "${tela[1]}"`);
         }
       });
