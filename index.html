@@ -13,6 +13,10 @@
     }
     h1 {
       color: #0055aa;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
     textarea {
       width: 100%;
@@ -34,8 +38,9 @@
       font-size: 16px;
       cursor: pointer;
       margin-bottom: 1.5rem;
+      text-decoration: none;
     }
-    button:hover {
+    button:hover, .tutorial-button:hover {
       background-color: #003f7f;
     }
     pre {
@@ -48,26 +53,25 @@
       word-wrap: break-word;
       max-height: 350px;
     }
-    .vocab-section {
-      background: white;
-      padding: 1rem;
-      border-radius: 6px;
-      box-shadow: 0 0 6px #ccc;
-      max-width: 700px;
-      margin-top: 2rem;
-    }
-    .vocab-section h2 {
-      color: #0055aa;
-    }
-    .vocab-section ul {
-      list-style: disc inside;
-      margin-left: 1rem;
+    .tutorial-button {
+      background-color: #0055aa;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 14px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <h1>Conversor de Gherkin (.feature) para Maestro YAML</h1>
+
+  <h1>
+    Conversor de Gherkin (.feature) para Maestro (.yaml)
+    <a class="tutorial-button" href="tutorial.html" target="_blank">📖 Tutorial</a>
+  </h1>
+
   <p>Cole a sua história de teste no formato Gherkin (usado em .feature) e clique em "Gerar YAML".</p>
+
   <textarea id="gherkin-input" placeholder="Exemplo:
 Given que estou na tela 'Login'
 When preenche o campo 'email' com 'teste@example.com'
@@ -76,39 +80,13 @@ When clica no botão 'Entrar'
 When espera 10 segundos
 Then vejo a tela 'Home'
 "></textarea>
+
   <button id="btnGenerate">Gerar YAML</button>
+
   <pre id="yaml-output"></pre>
 
   <div id="nao-reconhecidas" style="display:none; background:#ffe0e0; color:#900; padding:1rem; margin-top:1rem; border-radius:5px;">
-</div>
-
-   <a href="tutorial.html" target="_blank">📖 Ver tutorial de como escrever</a>
-
-  <section class="vocab-section">
-    <h2>Guia rápido para escrever os testes (para Product Owners)</h2>
-    <p>Este site entende comandos simples em português que representam ações na aplicação. Use frases como estas:</p>
-    <ul>
-      <li><b>Given</b> — Estado inicial, por exemplo: <i>Given que estou na tela "Login"</i></li>
-      <li><b>When</b> — Ações do usuário, como:
-        <ul>
-          <li>Preencher campo: <i>When preenche o campo "email" com "meuemail@example.com"</i></li>
-          <li>Clicar botão: <i>When clica no botão "Entrar"</i></li>
-          <li>Esperar por um elemento: <i>When espera o "loading"</i> ou <i>When espera o elemento "popup" sumir</i></li>
-          <li>Esperar um tempo fixo: <i>When espera</i> (5 segundos padrão) ou <i>When espera 10 segundos</i></li>
-          <li>Outros: rolar a tela, deslizar, pressionar voltar</li>
-        </ul>
-      </li>
-      <li><b>Then</b> — Resultado esperado, como: <i>Then vejo a tela "Home"</i></li>
-    </ul>
-    <p>Escreva entre aspas ("") o nome dos elementos, telas ou textos que aparecem na tela.</p>
-    <p>Exemplo mínimo completo:</p>
-    <pre>Given que estou na tela "Login"
-When preenche o campo "email" com "teste@example.com"
-When preenche o campo "senha" com "123456"
-When clica no botão "Entrar"
-When espera 10 segundos
-Then vejo a tela "Home"</pre>
-  </section>
+  </div>
 
   <script src="script.js" defer></script>
 </body>
