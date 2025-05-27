@@ -1,39 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Feature to Maestro YAML</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conversor Gherkin → Maestro YAML</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="header">
-  <h1>Conversor de Gherkin (.feature) para Maestro (.yaml)</h1>
-  <div class="header-buttons">
-    <a class="tutorial-button" href="tutorial.html" target="_blank">📖 Tutorial</a>
-    <a class="sponsor-button" href="https://github.com/sponsors/Pliniodev" target="_blank">❤️ Sponsor me</a>
-  </div>
-</div>
+  <header class="header">
+    <h1>Conversor de Gherkin (.feature) para Maestro (.yaml)</h1>
+    <nav class="header-buttons" aria-label="Links principais">
+      <a class="tutorial-button" href="tutorial.html" target="_blank" rel="noopener noreferrer">📖 Tutorial</a>
+      <a class="sponsor-button" href="https://github.com/sponsors/Pliniodev" target="_blank" rel="noopener noreferrer">❤️ Sponsor me</a>
+    </nav>
+  </header>
 
-  <p>Cole a sua história de teste no formato Gherkin (usado em .feature) e clique em "Gerar YAML".</p>
-
-  <textarea id="gherkin-input" placeholder="Exemplo:
+  <main>
+    <section>
+      <p>Cole a sua história de teste no formato Gherkin (.feature) e clique em <strong>"Gerar YAML"</strong>.</p>
+      <textarea id="gherkin-input" placeholder="Exemplo:
 Given que estou na tela 'Login'
 When preenche o campo 'email' com 'teste@example.com'
 When preenche o campo 'senha' com '123456'
 When clica no botão 'Entrar'
 When espera 10 segundos
-Then vejo a tela 'Home'
-"></textarea>
+Then vejo a tela 'Home'" 
+        rows="10" 
+        aria-describedby="gherkin-help"></textarea>
 
-  <button id="btnGenerate">Gerar YAML</button>
+      <button id="btnGenerate" type="button">Gerar YAML</button>
+    </section>
 
-  <pre id="yaml-output"></pre>
+    <section aria-label="Saída YAML">
+      <pre id="yaml-output" aria-live="polite"></pre>
+    </section>
 
-  <div id="nao-reconhecidas" style="display:none; background:#ffe0e0; color:#900; padding:1rem; margin-top:1rem; border-radius:5px;">
-  </div>
+    <section aria-label="Linhas não reconhecidas">
+      <div id="nao-reconhecidas" hidden class="alert">
+        <!-- Conteúdo injetado via JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Projeto Open Source por <a href="https://github.com/Pliniodev" target="_blank" rel="noopener noreferrer">Pliniodev</a></p>
+  </footer>
 
   <script src="script.js" defer></script>
+
 </body>
 </html>
