@@ -27,10 +27,12 @@
 
   <p>Siga os exemplos abaixo. Não precisa saber programar! Basta copiar a estrutura e trocar pelos nomes das telas e botões do seu aplicativo.</p>
 
+  <p><strong>Atenção:</strong> Caso alguma linha não siga as regras descritas aqui, ela será listada como <em>linha não reconhecida</em> e gerará um erro visível para você corrigir.</p>
+
   <h2>1. Verificar que uma tela está aparecendo</h2>
 
   <p><strong>Você escreve:</strong></p>
-  <pre>Given o app está na tela "Login"</pre>
+  <pre>Given que estou na tela "Login"</pre>
 
   <p><strong>O que significa:</strong></p>
   <p>O app deve mostrar a tela chamada "Login".</p>
@@ -40,7 +42,7 @@
   <h2>2. Preencher um campo com um valor</h2>
 
   <p><strong>Você escreve:</strong></p>
-  <pre>When o usuário preenche o campo "Usuário" com "teste123"</pre>
+  <pre>When preenche o campo "Usuário" com "teste123"</pre>
 
   <p><strong>O que significa:</strong></p>
   <p>O teste vai clicar no campo chamado "Usuário" e digitar "teste123".</p>
@@ -126,10 +128,11 @@ When desliza para baixo no elemento "Feed"</pre>
 
   <h2>Dicas importantes:</h2>
   <ul>
-    <li>Sempre coloque o nome da tela ou botão entre <strong>aspas</strong>.</li>
-    <li>Siga a estrutura: <code>Given</code>, <code>When</code>, <code>Then</code>.</li>
-    <li>Não se preocupe com maiúsculas ou acentos, o site entende bem.</li>
+    <li>Sempre coloque o nome da tela, botão ou elemento entre <strong>aspas</strong> (<code>" "</code>).</li>
+    <li>Siga a estrutura correta das frases usando as palavras-chave: <code>Given</code>, <code>When</code>, <code>Then</code> e <code>And</code>.</li>
+    <li>Se digitar algo diferente do esperado, o sistema vai mostrar erro destacando as linhas não reconhecidas.</li>
     <li>Para esperar, pode escrever só <code>When espera</code> para 5 segundos ou especificar: <code>When espera 10 segundos</code>.</li>
+    <li>O site aceita variações de maiúsculas, minúsculas e acentos.</li>
   </ul>
 
   <p><a href="index.html">← Voltar para o conversor</a></p>
